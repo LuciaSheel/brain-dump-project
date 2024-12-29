@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <title>Notes App</title>
+
+  <!-- Link to stylesheet for registration/login page -->
+  <link rel='stylesheet' href='../css/login.css'>
+</head>
+<body>
+  <!-- Main container for registration/login page -->
+  <div class='main-container'>
+
+    <!-- App title -->
+    <h1>Thoughts Dump</h1>
+
+    <!-- Tabs for switching between Register and Login -->
+    <div class='tabs'>
+      <button id='login-tab' class='active'>Log In</button>
+      <button id='register-tab'>Register</button>
+    </div>
+
+    <!-- Register Form -->
+    <div id='register-form-container' class='form-container'>
+      <form id='register-form' method='POST' action='/auth/register'>
+
+        <!-- Register username input -->
+        <input type='text' id='register-username' class='register-username-input' placeholder='Register your username...' required>
+
+        <!-- Register password input -->
+        <input type='password' id='register-password' class='register-password-input' placeholder='Register your password...' required>
+
+        <!-- Register button -->
+        <button type='submit'>Register</button>
+      </form>
+
+      <!-- Dynamically display error message -->
+      <div id='register-error' class='error'></div>
+    </div>
+
+    <!-- Login Form -->
+    <div id='login-form-container' class='form-container active'>
+      <form id='login-form' method='POST' action='/auth/login'>
+
+        <!-- login username input -->
+        <input type='text' id='login-username' class='login-username-input' placeholder='Login with your username...' required>
+
+        <!-- Login password input -->
+        <input type='password' id='login-password' class='login-password-input' placeholder='Login with your password...' required>
+
+        <!-- Login button -->
+        <button type='submit'>Login</button>
+      </form>
+
+      <!-- Dynamically display error message -->
+      <div id='login-error' class='error'></div>
+    </div>
+  </div>
+
+  <!-- Link to js file that handles reg and login functionality -->
+  <script src='../js/login.js'></script>
+</body>
+</html>
