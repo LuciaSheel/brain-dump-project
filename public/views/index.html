@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <title>Notes App</title>
+
+  <!-- Link to stylesheet for notes page -->
+  <link rel='stylesheet' href='../css/notes.css'>
+
+  <!-- Droid Sans font for input and textareas -->
+  <link href='https://fonts.googleapis.com/css2?family=Droid+Sans&display=swap' rel='stylesheet'>
+</head>
+<body>
+  <!-- Main container for the notes page -->
+  <div class='app-container'>
+
+    <!-- App title -->
+    <h1 class='app-title'>Offload Brain Here</h1>
+
+    <!-- Form for creating a note -->
+    <form id='note-form' class='note-form' method='POST' action='/notes'>
+  
+      <!-- Note title input -->
+      <input id='note-title' class='note-title-input' type='text' placeholder='Enter note title...' required />
+
+      <!-- Note date input -->
+      <input id='note-date' class='note-date-input' type='date' required />
+
+      <!-- Textarea for note content -->
+      <textarea id='note-input' class='note-input-field' placeholder='Write your note...' required></textarea>
+
+      <!-- Submit form button -->
+      <button class='btn' type='submit'>Add Note</button>
+    </form>
+
+    <!-- Logout button -->
+    <button id='logout-button' class='btn' type='button'>Logout</button>
+
+    <!-- Container for displaying the notes -->
+    <div id='notes-list' class='notes-list'>
+      <!-- Dynamically populated with the notes -->
+    </div>
+  </div>
+
+  <script src='../js/notes.js'></script>
+</body>
+</html>
