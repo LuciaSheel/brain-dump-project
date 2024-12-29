@@ -1,0 +1,125 @@
+/* General body styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+/* Register/Login page main container */
+.main-container {
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 1024px;
+  padding: 20px;
+}
+
+/* Register/Login page title */
+h1 {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  font-family: 'Arial Black', sans-serif;
+  color: #494949;
+  font-size: 2rem;
+  background-image: linear-gradient(to right, #ff7e5f, #feb47b, #6a11cb, #2575fc);  /* Gradient colors */
+  background-clip: text;  /* Clip the gradient to the text */
+  color: transparent;  /* Make the text color transparent to show the gradient */
+  -webkit-background-clip: text;  /* For Safari */
+}
+
+/* Register/Login form switching buttons */
+button {
+  padding: 10px;
+  background-color: #47b997;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #49b664;
+}
+
+/* Register/Login page forms containers */
+#register-form-container,
+#login-form-container {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  display: none; /* Initially hide both forms */
+  text-align: center;
+}
+
+/* Show Registration/Login form when switching*/
+#register-form-container.active,
+#login-form-container.active {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Hide Registration/Login form when switching*/
+#register-form-container,
+#login-form-container {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Registration/Login form inputs container */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between inputs */
+}
+
+#register-form input,
+#login-form input {
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 1rem;
+  color: #727070;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#register-form input:focus, 
+#login-form input:focus {
+  border-color: #f4c542;
+  outline: none;
+}
+
+/* Register/Login button */
+form button {
+  padding: 10px;
+  background-color: #80bfe9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+form button:hover {
+  background-color: #60b0e6;
+}
+
+/* Error message */
+.error {
+  margin: 10px auto;
+  text-align: center;
+  font-family: 'Droid Sans', sans-serif;
+  color: #e97979;
+}
