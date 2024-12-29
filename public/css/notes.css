@@ -1,0 +1,243 @@
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+}
+
+/* Notes page main container */
+.main-container {
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 1024px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Notes page title drop and bounce effect */
+@keyframes dropFromSky {
+  0% {
+    transform: translateY(-200vh); /* Start far above the screen */
+  }
+  70% {
+    transform: translateY(0); /* Land in place */
+  }
+  85% {
+    transform: translateY(-20px); /* Bounce upward slightly */
+  }
+  100% {
+    transform: translateY(0); /* Settle back in place */
+  }
+}
+
+/* Notes page title */
+.notes-page-title {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  font-family: 'Arial Black', sans-serif;
+  font-size: 2rem;
+  background-image: linear-gradient(to right, #ff7e5f, #feb47b, #6a11cb, #2575fc);
+  background-clip: text;
+  color: transparent;  /* Make the text color transparent to show the gradient */
+  -webkit-background-clip: text;  /* For Safari */
+  animation: dropFromSky 1.2s ease-out, shadowPuff 1.2s ease-out;
+  display: inline-block; /* Required for transform to work properly */
+  white-space: nowrap; /* Prevent wrapping of title text during the animation */
+}
+
+/* Note form */
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Note form input and textarea */
+.note-form input,
+.note-form textarea {
+  resize: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 1rem;
+  color: #727070;
+}
+
+/* Focus */
+.note-form input:focus,
+.note-form textarea:focus, 
+.note-date-input:focus {
+  border-color: #f4c542;
+  outline: none;
+}
+
+/* Notes list container */
+#notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0 auto;
+  padding: 10px 0;
+  overflow-x: hidden;
+}
+
+/* Note container */
+.note {
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Note title */
+.notes-list .note-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-family: 'Arial Black', sans-serif;
+  background-image: linear-gradient(to right, #ff7e5f, #feb47b, #6a11cb, #2575fc);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;  /* For Safari */
+  margin-right: 10px; /* Space between title and text */
+  display: inline-block; /* Ensure gradient applies properly */
+}
+
+/* Date */
+input[type='date'] {
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 1rem;
+  color: #727070;
+}
+
+.note-date {
+  font-size: 0.8rem;
+  color: #727070;
+  margin: 5px 0; /* Add spacing between title and note text */
+}
+
+/* Note text */
+.note-text {
+  flex: 2; /* Allow note text to take up more space */
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 1rem;
+  color: #727070;
+}
+
+.note-text.done {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* "Add Note" and "Logout" buttons */
+.btn {
+  background-color: #80bfe9;
+  font-family: 'Droid Sans', sans-serif;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #60b0e6;
+}
+
+/* Additional margin for the logout button to maintain spacing */
+#logout-button {
+  margin-top: 10px;
+}
+
+/* Action buttons container */
+.note-actions {
+  display: flex;
+  gap: 10px; /* Spacing between buttons */
+  margin-top: 10px;
+}
+
+/* Action buttons */
+.note-actions button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 50%; /* Makes the buttons round */
+  font-size: .75rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  color: #fff;
+}
+
+/* Edit button */
+.note-actions button:nth-child(1) {
+  background-color: #ffd966; /* Light yellow */
+}
+
+.note-actions button:nth-child(1):hover {
+  background-color: #f4c542;
+}
+
+/* Done button */
+.note-actions button:nth-child(2) {
+  background-color: #80d572; /* Light green */
+}
+
+.note-actions button:nth-child(2):hover {
+  background-color: #69b659;
+}
+
+/* Delete button */
+.note-actions button:nth-child(3) {
+  background-color: #f57c7c; /* Light red */
+}
+
+.note-actions button:nth-child(3):hover {
+  background-color: #e05656;
+}
+
+/* Button hover effect */
+.note-actions button:hover {
+  transform: scale(1.1); /* Slightly enlarges the button on hover */
+}
+
+/* Sliding down animation for deleted note */
+@keyframes slideDown {
+  0% {
+    transform: translateY(0);  /* Start at normal position */
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh); /* Slide off the screen downward */
+    opacity: 0; /* Fade out as it slides */
+  }
+}
+
+/* Apply sliding down animation when note is deleted */
+.note.deleted {
+  animation: slideDown 0.6s ease-out forwards; /* Slide down the page in 0.6s */
+}
+
+@media (max-width: 400px) {
+  .app-title {
+      font-size: 1.5rem; /* Smaller font size for small screens */
+  }
+}
+
