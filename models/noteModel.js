@@ -6,19 +6,20 @@ const noteSchema = new Schema({
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   content: {
     type: String,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Reference to the User model
+    ref: 'User', // Reference to the User model
+    required: true,
   }
 });
 
