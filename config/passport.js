@@ -8,13 +8,13 @@ passport.use(new LocalStrategy(
     User.findOne({ username })
       .then((user) => {
         if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
+          return done(null, false, { message: 'Incorrect username or password.' });
         }
 
         user.comparePassword(password)
           .then((isMatch) => {
             if (!isMatch) {
-              return done(null, false, { message: 'Incorrect password.' });
+              return done(null, false, { message: 'Incorrect username or password.' });
             }
             return done(null, user); // User is authenticated
           })
