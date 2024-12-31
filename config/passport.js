@@ -8,19 +8,29 @@ passport.use(new LocalStrategy(
     User.findOne({ username })
       .then((user) => {
         if (!user) {
-          return done(null, false, { message: 'Incorrect username or password.' });
+          console.error('User not found');
+          return done(null, false, { message: 'Invalid credentials.' });
         }
 
         user.comparePassword(password)
           .then((isMatch) => {
             if (!isMatch) {
-              return done(null, false, { message: 'Incorrect username or password.' });
+              console.error('Incorrect password');
+              return done(null, false, { message: 'Invalid credentials.' });
             }
             return done(null, user); // User is authenticated
           })
-          .catch(err => done(err));
+          .catch((err) => {
+            // Log the error and throw a descriptive error for easier debugging
+            console.error('Error comparing passwords:', err);
+            throw new Error("Error comparing passwords");
+          });
       })
-      .catch(err => done(err));
+      .catch((err) => {
+        // Catch and log any other errors during the database query
+        console.error('Error finding user:', err);
+        return done(err); // Pass the error to Passport's error handling
+      });
   }
 ));
 
