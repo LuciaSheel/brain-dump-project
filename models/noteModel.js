@@ -17,7 +17,7 @@ const noteSchema = new Schema({
     ref: 'User', // Reference to the User model
     required: true,
   }
-}, { timestamps: true });  // Automatically adds createdAt and updatedAt
+}, { timestamps: true });  // Mongoose adds createdAt and updatedAt
 
 const Note = mongoose.model('Note', noteSchema);
 module.exports = Note;
