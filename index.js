@@ -1,4 +1,6 @@
 // index.js
+const { isAuthenticated } = require('./config/authMiddleware');
+
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
@@ -34,6 +36,10 @@ app.use(passport.session());  // This will enable `req.user`
 
 // Connect to the database
 connectDB();  // Call the function to connect to MongoDB
+
+app.get('/notes', isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'views', 'index.html'));
+  });
 
 // Use routes
 app.use('/auth', authRouter);  // Authentication routes (login, registration)
