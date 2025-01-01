@@ -1,75 +1,72 @@
-const { isAuthenticated } = require('../config/authMiddleware.js');
+// routers/notesRouter.js
 const express = require('express');
 const router = express.Router();
-const Note = require('../models/noteModel'); // Adjust if needed
-console.log('Current directory:', __dirname);
+const Note = require('../models/noteModel');  // Import the Note model
+const { isAuthenticated } = require('../config/authMiddleware');  // Import the authentication middleware
 
-// CREATE: Add a new note
-router.post('/add', isAuthenticated, async (req, res) => {
-  try {
-    const newNote = new Note({
-      title: req.body.title,
-      content: req.body.content,
-      user: req.user._id, // Assuming you're storing the user ID for the note
-    });
-    await newNote.save();
-    res.status(201).json({ message: 'Note created', note: newNote });
-  } catch (err) {
-    res.status(400).json({ message: 'Error creating note', error: err });
-  }
-});
-
-// READ: Get all notes for the authenticated user
+// GET all notes for the authenticated user
 router.get('/', isAuthenticated, async (req, res) => {
-  try {
-    const notes = await Note.find({ user: req.user._id });
-    res.status(200).json(notes);
-  } catch (err) {
-    res.status(400).json({ message: 'Error fetching notes', error: err });
-  }
+    try {
+        // Fetch notes associated with the logged-in user
+        const notes = await Note.find({ userId: req.user._id }); // Assuming `userId` is a reference to the logged-in user
+        res.json(notes); // Send the notes as a response
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error fetching notes', error: err });
+    }
 });
 
-// READ: Get a specific note by ID
-router.get('/:id', isAuthenticated, async (req, res) => {
-  try {
-    const note = await Note.findById(req.params.id);
-    if (!note) {
-      return res.status(404).json({ message: 'Note not found' });
+// POST a new note for the authenticated user
+router.post('/', isAuthenticated, async (req, res) => {
+    const { title, content, date } = req.body;
+    try {
+        const newNote = new Note({
+            title,
+            content,
+            date,
+            userId: req.user._id  // Save the note with the logged-in user's ID
+        });
+        await newNote.save();  // Save the new note to the database
+        res.status(201).json(newNote);  // Return the newly created note
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error saving note', error: err });
     }
-    res.status(200).json(note);
-  } catch (err) {
-    res.status(400).json({ message: 'Error fetching note', error: err });
-  }
 });
 
-// UPDATE: Update a specific note
-router.put('/:id', isAuthenticated, async (req, res) => {
-  try {
-    const updatedNote = await Note.findByIdAndUpdate(
-      req.params.id,
-      { title: req.body.title, content: req.body.content },
-      { new: true } // Return the updated document
-    );
-    if (!updatedNote) {
-      return res.status(404).json({ message: 'Note not found' });
+// PUT (update) an existing note
+router.put('/:noteId', isAuthenticated, async (req, res) => {
+    const { noteId } = req.params;
+    const { title, content, date } = req.body;
+    try {
+        const updatedNote = await Note.findByIdAndUpdate(
+            noteId,
+            { title, content, date },
+            { new: true }  // Return the updated note
+        );
+        if (!updatedNote) {
+            return res.status(404).json({ message: 'Note not found' });
+        }
+        res.json(updatedNote);  // Return the updated note
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error updating note', error: err });
     }
-    res.status(200).json({ message: 'Note updated', note: updatedNote });
-  } catch (err) {
-    res.status(400).json({ message: 'Error updating note', error: err });
-  }
 });
 
-// DELETE: Delete a specific note
-router.delete('/:id', isAuthenticated, async (req, res) => {
-  try {
-    const deletedNote = await Note.findByIdAndDelete(req.params.id);
-    if (!deletedNote) {
-      return res.status(404).json({ message: 'Note not found' });
+// DELETE a note
+router.delete('/:noteId', isAuthenticated, async (req, res) => {
+    const { noteId } = req.params;
+    try {
+        const deletedNote = await Note.findByIdAndDelete(noteId);
+        if (!deletedNote) {
+            return res.status(404).json({ message: 'Note not found' });
+        }
+        res.json({ message: 'Note deleted successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error deleting note', error: err });
     }
-    res.status(200).json({ message: 'Note deleted' });
-  } catch (err) {
-    res.status(400).json({ message: 'Error deleting note', error: err });
-  }
 });
 
 module.exports = router;

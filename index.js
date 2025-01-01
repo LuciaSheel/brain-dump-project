@@ -16,17 +16,16 @@ const notesRouter = require('./routers/notesRouter');
 // Initialize the app
 const app = express();
 
-app.use(express.static('public'));
-
 // Middleware setup
-app.use(express.json());  // to parse JSON payloads
-app.use(express.urlencoded({ extended: true }));  // for URL-encoded data (form data)
+app.use(express.static('public'));  // Serve static files (css, js)
+app.use(express.json());  // To parse JSON payloads
+app.use(express.urlencoded({ extended: true }));  // For URL-encoded data (form data)
 
 // Session management
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',  // Use environment variable for security
-  resave: false,
-  saveUninitialized: false
+    secret: process.env.SESSION_SECRET || 'your-secret-key',  // Use environment variable for security
+    resave: false,
+    saveUninitialized: false
 }));
 
 // Initialize Passport
@@ -40,48 +39,30 @@ connectDB();  // Call the function to connect to MongoDB
 app.use('/auth', authRouter);  // Authentication routes (login, registration)
 app.use('/notes', notesRouter);  // Notes routes (CRUD operations)
 
-// Protected route for displaying notes
-app.get('/notes', (req, res) => {
-  if (req.isAuthenticated()) {
-    // Populate the user's notes (get full note details)
-    User.findById(req.user._id)
-      .populate('notes')  // This will populate the `notes` array with the full note documents
-      .then(user => {
-        res.json({ message: 'Here are your notes', notes: user.notes });
-      })
-      .catch(err => {
-        res.status(500).json({ message: 'Error fetching notes', error: err });
-      });
-  } else {
-    res.status(401).json({ message: 'You are not authenticated' });
-  }
-});
-
 // Authentication-related routes (simplified)
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'views', 'login.html'));
+    res.sendFile(path.join(__dirname, 'public', 'views', 'login.html'));
 });
 
 app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'views', 'register.html'));
+    res.sendFile(path.join(__dirname, 'public', 'views', 'register.html'));
 });
 
 // Logout route
 app.get('/logout', (req, res) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    res.redirect('/login');
-  });
+    req.logout((err) => {
+        if (err) return next(err);
+        res.redirect('/login');
+    });
 });
 
 // Default route
 app.get('/', (req, res) => {
-  res.send('Welcome to the Note-Taking App!');
+    res.send('Welcome to the Note-Taking App!');
 });
 
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
-
