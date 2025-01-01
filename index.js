@@ -16,6 +16,8 @@ const notesRouter = require('./routers/notesRouter');
 // Initialize the app
 const app = express();
 
+app.use(express.static('public'));
+
 // Middleware setup
 app.use(express.json());  // to parse JSON payloads
 app.use(express.urlencoded({ extended: true }));  // for URL-encoded data (form data)
