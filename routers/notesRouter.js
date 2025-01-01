@@ -1,4 +1,4 @@
-const { isAuthenticated } = require('../config/authMiddlewear.js');
+const { isAuthenticated } = require('../config/authMiddleware.js');
 const express = require('express');
 const router = express.Router();
 const Note = require('../models/noteModel'); // Adjust if needed
