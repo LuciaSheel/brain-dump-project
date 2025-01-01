@@ -1,7 +1,8 @@
+const { isAuthenticated } = require('../config/authMiddlewear.js');
 const express = require('express');
 const router = express.Router();
-const Note = require('../models/noteModel');
-const { isAuthenticated } = require('../config/authMiddleware'); // Use isAuthenticated from authMiddleware.js
+const Note = require('../models/noteModel'); // Adjust if needed
+console.log('Current directory:', __dirname);
 
 // CREATE: Add a new note
 router.post('/add', isAuthenticated, async (req, res) => {

@@ -7,7 +7,7 @@ const path = require('path');
 // Import config files
 require('dotenv').config();  // Load environment variables from .env
 const connectDB = require('./config/db');  // Import the database connection function
-require('./config/passport')(passport);  // Initialize passport configuration
+require('./config/passport');  // Initialize passport configuration
 
 // Import routes
 const authRouter = require('./routers/authRouter');
@@ -82,3 +82,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
