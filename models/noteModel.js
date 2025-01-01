@@ -12,16 +12,12 @@ const noteSchema = new Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model
     required: true,
   }
-});
+}, { timestamps: true });  // Automatically adds createdAt and updatedAt
 
 const Note = mongoose.model('Note', noteSchema);
 module.exports = Note;
