@@ -8,7 +8,7 @@ const { isAuthenticated } = require('../config/authMiddleware');  // Import the 
 router.get('/', isAuthenticated, async (req, res) => {
     try {
         // Fetch notes associated with the logged-in user
-        const notes = await Note.find({ userId: req.user._id }); // Assuming `userId` is a reference to the logged-in user
+        const notes = await Note.find({ user: req.user._id });
         res.json(notes); // Send the notes as a response
     } catch (err) {
         console.error(err);
@@ -24,7 +24,7 @@ router.post('/', isAuthenticated, async (req, res) => {
             title,
             content,
             date,
-            userId: req.user._id  // Save the note with the logged-in user's ID
+            user: req.user._id  // Save the note with the logged-in user's ID
         });
         await newNote.save();  // Save the new note to the database
         res.status(201).json(newNote);  // Return the newly created note
