@@ -55,6 +55,23 @@ app.get('/notes', (req, res) => {
   }
 });
 
+// Authentication-related routes (simplified)
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'views', 'login.html'));
+});
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'views', 'register.html'));
+});
+
+// Logout route
+app.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect('/login');
+  });
+});
+
 // Default route
 app.get('/', (req, res) => {
   res.send('Welcome to the Note-Taking App!');
