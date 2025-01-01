@@ -34,14 +34,11 @@ app.use(passport.session());  // This will enable `req.user`
 // Connect to the database
 connectDB();  // Call the function to connect to MongoDB
 
-// Serve static files (optional, depending on setup)
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Use routes
 app.use('/auth', authRouter);  // Authentication routes (login, registration)
 app.use('/notes', notesRouter);  // Notes routes (CRUD operations)
 
-// Example of a protected route for displaying notes
+// Protected route for displaying notes
 app.get('/notes', (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ message: 'Here are your notes', notes: req.user.notes });
