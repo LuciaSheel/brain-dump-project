@@ -17,8 +17,7 @@ function createNoteElement(title, text, date) {
    // Date
    const noteDate = document.createElement('p');
    noteDate.classList.add('note-date');
-  //  const currentDate = new Date().toLocaleDateString();
-   noteDate.textContent = date;
+   noteDate.textContent = `Date: ${new Date(date).toLocaleDateString()}`;
 
   const noteText = document.createElement('span');
   noteText.classList.add('note-text');
@@ -68,12 +67,35 @@ form.addEventListener('submit', (e) => {
 
   if (!noteTitle || !noteText || !noteDate) return;
 
+  // Add the note to the DOM
   const noteElement = createNoteElement(noteTitle, noteText, noteDate);
   notesList.appendChild(noteElement);
 
+   // Send the new note to the server via POST request
+   fetch('/notes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      title: noteTitle,
+      content: noteText,
+      date: noteDate,  // Make sure to use the correct format for the date if necessary
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response (e.g., update the DOM with the new note data if needed)
+    console.log('Note saved:', data);
+  })
+  .catch(error => {
+    console.error('Error saving note:', error);
+  });
+
+  // Clear the input fields after submission
   noteTitleInput.value = '';
-  noteInput.value = ''; // Clear input
-  noteDateInput.value = ''; // Clear date input
+  noteInput.value = '';
+  noteDateInput.value = '';
 });
 
 // Logout button event listener
