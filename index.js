@@ -41,7 +41,15 @@ app.use('/notes', notesRouter);  // Notes routes (CRUD operations)
 // Protected route for displaying notes
 app.get('/notes', (req, res) => {
   if (req.isAuthenticated()) {
-    res.json({ message: 'Here are your notes', notes: req.user.notes });
+    // Populate the user's notes (get full note details)
+    User.findById(req.user._id)
+      .populate('notes')  // This will populate the `notes` array with the full note documents
+      .then(user => {
+        res.json({ message: 'Here are your notes', notes: user.notes });
+      })
+      .catch(err => {
+        res.status(500).json({ message: 'Error fetching notes', error: err });
+      });
   } else {
     res.status(401).json({ message: 'You are not authenticated' });
   }

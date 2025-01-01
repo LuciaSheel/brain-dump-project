@@ -5,7 +5,8 @@ const bcrypt = require('bcryptjs');
 // Define user schema
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  notes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note' }]  // Add a reference to the Note model
 });
 
 // Presave hook to hash password before saving
