@@ -1,7 +1,6 @@
 const express = require('express');
 const passport = require('../config/passport');
-const User = require('../models/userModel');
-const bcrypt = require('bcryptjs');  // Ensure bcrypt is imported
+const { registerUser, loginUser, logoutUser } = require('../controllers/authController');
 const router = express.Router();
 
 // Registration route
