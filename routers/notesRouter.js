@@ -13,22 +13,7 @@ const {
 router.get('/', isAuthenticated, getAllNotes);
 
 // POST a new note for the authenticated user
-router.post('/', isAuthenticated, async (req, res) => {
-    const { title, content, date } = req.body;
-    try {
-        const newNote = new Note({
-            title,
-            content,
-            date,
-            user: req.user._id  // Save the note with the logged-in user's ID
-        });
-        await newNote.save();  // Save the new note to the database
-        res.status(201).json(newNote);  // Return the newly created note
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error saving note', error: err });
-    }
-});
+router.post('/', isAuthenticated, createNote);
 
 // PUT (update) an existing note
 router.put('/:noteId', isAuthenticated, async (req, res) => {
