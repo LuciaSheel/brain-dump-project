@@ -28,3 +28,23 @@ const createNote = async (req, res) => {
         res.status(500).json({ message: 'Error saving note', error: err });
     }
 };
+
+// PUT (update) an existing note
+const updateNote = async (req, res) => {
+  const { noteId } = req.params;
+  const { title, content, date } = req.body;
+  try {
+      const updatedNote = await Note.findByIdAndUpdate(
+          noteId,
+          { title, content, date },
+          { new: true }
+      );
+      if (!updatedNote) {
+          return res.status(404).json({ message: 'Note not found' });
+      }
+      res.json(updatedNote);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Error updating note', error: err });
+  }
+};

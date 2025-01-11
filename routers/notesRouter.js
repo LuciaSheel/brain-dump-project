@@ -16,24 +16,7 @@ router.get('/', isAuthenticated, getAllNotes);
 router.post('/', isAuthenticated, createNote);
 
 // PUT (update) an existing note
-router.put('/:noteId', isAuthenticated, async (req, res) => {
-    const { noteId } = req.params;
-    const { title, content, date } = req.body;
-    try {
-        const updatedNote = await Note.findByIdAndUpdate(
-            noteId,
-            { title, content, date },
-            { new: true }  // Return the updated note
-        );
-        if (!updatedNote) {
-            return res.status(404).json({ message: 'Note not found' });
-        }
-        res.json(updatedNote);  // Return the updated note
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error updating note', error: err });
-    }
-});
+router.put('/:noteId', isAuthenticated, updateNote);
 
 // DELETE a note
 router.delete('/:noteId', isAuthenticated, async (req, res) => {
