@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('../config/passport');
-const { registerUser, loginUser, logoutUser } = require('../controllers/authController');
+const { registerUser, loginUser, logoutUser } = require('../controllers/authController'); // Import controller functions
 const router = express.Router();
 
 // Registration route
