@@ -1,20 +1,16 @@
 // routers/notesRouter.js
 const express = require('express');
 const router = express.Router();
-const Note = require('../models/noteModel');  // Import the Note model
 const { isAuthenticated } = require('../config/authMiddleware');  // Import the authentication middleware
+const {
+    getAllNotes,
+    createNote,
+    updateNote,
+    deleteNote
+} = require('../controllers/notesController'); // Import controller functions
 
 // GET all notes for the authenticated user
-router.get('/', isAuthenticated, async (req, res) => {
-    try {
-        // Fetch notes associated with the logged-in user
-        const notes = await Note.find({ user: req.user._id });
-        res.json(notes); // Send the notes as a response
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error fetching notes', error: err });
-    }
-});
+router.get('/', isAuthenticated, getAllNotes);
 
 // POST a new note for the authenticated user
 router.post('/', isAuthenticated, async (req, res) => {
