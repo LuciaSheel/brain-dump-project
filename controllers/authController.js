@@ -39,3 +39,15 @@ const loginUser = (req, res, next) => {
     });
   })(req, res, next); // Pass req, res, and next to passport's authentication
 };
+
+// Log out a user
+const logoutUser = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error logging out', error: err });
+    }
+    res.status(200).json({ message: 'Logged out successfully' });
+  });
+};
+
+module.exports = { registerUser, loginUser, logoutUser };

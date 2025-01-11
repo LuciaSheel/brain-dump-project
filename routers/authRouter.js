@@ -10,13 +10,6 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 // Logout route
-router.get('/logout', (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      return res.status(500).json({ message: 'Error logging out', error: err });
-    }
-    res.status(200).json({ message: 'Logged out successfully' });
-  });
-});
+router.get('/logout', logoutUser);
 
 module.exports = router;
