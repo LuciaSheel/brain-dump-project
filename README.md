@@ -35,3 +35,6 @@ A simple web application for creating, editing, and deleting notes.
 2. Log in
 3. Create, edit, mark as done, and delete notes
 4. Logout
+
+## Database
+The project uses MongoDB, and the database is named `notesApp`.
