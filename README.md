@@ -4,6 +4,10 @@ A simple web application for creating, editing, and deleting notes.
 
 ***
 
+## Prerequisites
+- Node.js (v14 or later)
+- npm (v6 or later)
+
 ## Installation
 1. Clone the repository.
    ```
