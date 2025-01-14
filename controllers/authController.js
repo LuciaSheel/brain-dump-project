@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
 };
 
 // Log in a user
-const loginUser = (req, res, next) => {
+const loginUser = (req, res, next, passport) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
       return res.status(500).json({ message: 'Error during login', error: err });
