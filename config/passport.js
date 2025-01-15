@@ -36,10 +36,13 @@ passport.serializeUser((user, done) => {
     done(null, user.id); // Store user ID in session
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id)
-        .then((user) => done(null, user))
-        .catch((err) => done(err));
-});
+passport.deserializeUser(async (id, done) => {
+    try {
+      const user = await User.findById(id); // Replace with your User model query
+      done(null, user); // Attach the user to req.user
+    } catch (err) {
+      done(err);
+    }
+  });
 
 module.exports = passport;

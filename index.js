@@ -2,6 +2,8 @@
 const { isAuthenticated } = require('./config/authMiddleware');
 
 const express = require('express');
+// Initialize the app
+const app = express();
 const passport = require('passport');
 const session = require('express-session');
 const path = require('path');
@@ -11,28 +13,33 @@ require('dotenv').config();  // Load environment variables from .env
 const connectDB = require('./config/db');  // Import the database connection function
 require('./config/passport');  // Initialize passport configuration
 
-// Import routes
-const authRouter = require('./routers/authRouter');
-const notesRouter = require('./routers/notesRouter');
-
-// Initialize the app
-const app = express();
-
-// Middleware setup
-app.use(express.static('public'));  // Serve static files (css, js)
-app.use(express.json());  // To parse JSON payloads
-app.use(express.urlencoded({ extended: true }));  // For URL-encoded data (form data)
-
 // Session management
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secret-key',  // Use environment variable for security
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { secure: false }    // Use `true` if using HTTPS
 }));
-
 // Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());  // This will enable `req.user`
+// Import routes
+const authRouter = require('./routers/authRouter');
+const notesRouter = require('./routers/notesRouter');
+
+
+// Middleware to log every incoming request
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.url}`);
+    next();  // Proceed to the next middleware or route handler
+});
+
+// Middleware setup
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());  // To parse JSON payloads
+app.use(express.urlencoded({ extended: true }));  // For URL-encoded data (form data)
+
+
 
 // Connect to the database
 connectDB();  // Call the function to connect to MongoDB
@@ -65,6 +72,11 @@ app.get('/logout', (req, res) => {
 // Default route
 app.get('/', (req, res) => {
     res.send('Welcome to the Note-Taking App!');
+});
+
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(500).json({ message: 'Internal server error' });
 });
 
 // Start the server

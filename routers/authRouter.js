@@ -7,7 +7,11 @@ const router = express.Router();
 router.post('/register', registerUser);
 
 // Login route
-router.post('/login', (req, res, next) => loginUser(req, res, next, passport));
+router.post('/login', (req, res, next) => {
+  console.log('Login request body:', req.body);  // Log the login data being sent
+  loginUser(req, res, next, passport);
+});
+
 
 // Logout route
 router.get('/logout', logoutUser);

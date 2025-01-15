@@ -9,8 +9,20 @@ const {
     deleteNote
 } = require('../controllers/notesController'); // Import controller functions
 
-// GET all notes for the authenticated user
-router.get('/', isAuthenticated, getAllNotes);
+router.get('/test', (req, res) => {
+    res.send('Test route hit');
+});
+
+
+// Check if the router is hit
+router.get('/notes', (req, res, next) => {
+    console.log('GET /notes router hit');
+    next();  // Proceed to the next middleware or route handler
+});
+
+router.get('/notes', isAuthenticated, getAllNotes);  // Re-enable authentication middleware
+
+
 
 // POST a new note for the authenticated user
 router.post('/', isAuthenticated, createNote);
