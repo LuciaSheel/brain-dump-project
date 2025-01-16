@@ -8,6 +8,9 @@ const passport = require('passport');
 const session = require('express-session');
 const path = require('path');
 
+const Note = require('./models/noteModel'); // Adjust path as needed
+
+
 // Import config files
 require('dotenv').config();  // Load environment variables from .env
 const connectDB = require('./config/db');  // Import the database connection function
@@ -44,9 +47,21 @@ app.use(express.urlencoded({ extended: true }));  // For URL-encoded data (form 
 // Connect to the database
 connectDB();  // Call the function to connect to MongoDB
 
-app.get('/notes', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'views', 'index.html'));
+// app.get('/notes', isAuthenticated, (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'views', 'index.html'));
+//   });
+
+app.get('/notes', isAuthenticated, async (req, res) => {
+    try {
+      // Fetch all notes
+      const notes = await Note.find({});
+      res.json(notes); // Send all notes as JSON
+    } catch (err) {
+      res.status(500).json({ error: 'Failed to fetch notes' });
+    }
   });
+  
+  
 
 // Use routes
 app.use('/auth', authRouter);  // Authentication routes (login, registration)
