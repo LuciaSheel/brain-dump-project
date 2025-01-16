@@ -3,17 +3,23 @@ const Note = require('../models/noteModel');  // Import the Note model
 
 // GET all notes for the authenticated user
 const getAllNotes = async (req, res) => {
-    console.log('Fetching notes for user:', req.user._id);  // Log user ID
+    console.log('Route /notes was hit');
+    console.log('Route /notes was hit by user:', req.user);
+
     try {
-        const notes = await Note.find({ user: req.user._id });
-        console.log('Notes for user:', notes);  // Log the fetched notes
-        res.setHeader('Content-Type', 'application/json');  // Manually set Content-Type
-        res.json(notes);  // Ensure this sends a JSON response
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error fetching notes', error: err });
+        // Fetch notes from the database
+        const notes = await Note.find({ user: req.user._id }); // Assuming notes are tied to a user
+        
+        // Respond with the notes
+        res.status(200).json(notes);
+    } catch (error) {
+        console.error('Error fetching notes:', error);
+        
+        // Respond with an error message
+        res.status(500).json({ message: 'Failed to fetch notes', error });
     }
 };
+
 
 
 // POST a new note for the authenticated user
