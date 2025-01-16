@@ -15,10 +15,10 @@ router.get('/test', (req, res) => {
 
 
 // Check if the router is hit
-router.get('/notes', (req, res, next) => {
-    console.log('GET /notes router hit');
-    next();  // Proceed to the next middleware or route handler
-});
+// router.get('/notes', (req, res, next) => {
+//     console.log('GET /notes router hit');
+//     next();  // Proceed to the next middleware or route handler
+// });
 
 router.get('/notes', isAuthenticated, getAllNotes);  // Re-enable authentication middleware
 
