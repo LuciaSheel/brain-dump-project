@@ -10,6 +10,10 @@ const path = require('path');
 
 const Note = require('./models/noteModel'); // Adjust path as needed
 
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 
 // Import config files
 require('dotenv').config();  // Load environment variables from .env
@@ -51,15 +55,34 @@ connectDB();  // Call the function to connect to MongoDB
 //     res.sendFile(path.join(__dirname, 'public', 'views', 'index.html'));
 //   });
 
+// app.get('/notes', isAuthenticated, async (req, res) => {
+//     try {
+//       // Fetch all notes
+//       const notes = await Note.find({});
+//       res.json(notes); // Send all notes as JSON
+//     } catch (err) {
+//       res.status(500).json({ error: 'Failed to fetch notes' });
+//     }
+//   });
+
 app.get('/notes', isAuthenticated, async (req, res) => {
     try {
-      // Fetch all notes
-      const notes = await Note.find({});
-      res.json(notes); // Send all notes as JSON
+      console.log('Authenticated user:', req.user);  // Log the authenticated user
+      const notes = await Note.find({ user: req.user._id });
+      console.log('Fetched notes:', notes);  // Log the fetched notes
+  
+      if (notes.length === 0) {
+        return res.status(404).json({ error: 'No notes found' });
+      }
+  
+      res.render('index', { notes: notes });
     } catch (err) {
+      console.error('Error fetching notes:', err);
       res.status(500).json({ error: 'Failed to fetch notes' });
     }
   });
+  
+  
   
   
 
