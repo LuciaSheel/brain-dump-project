@@ -14,6 +14,17 @@ router.post('/login', (req, res, next) => {
 
 
 // Logout route
-router.get('/logout', logoutUser);
+// router.get('/logout', logoutUser);
+
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
+      if (err) {
+          console.error('Error during logout:', err);
+          return res.redirect('/notes'); // Redirect to notes if an error occurs
+      }
+      res.redirect('/login'); // Redirect to the login route
+  });
+});
+
 
 module.exports = router;

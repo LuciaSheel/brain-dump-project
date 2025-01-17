@@ -100,7 +100,7 @@ form.addEventListener('submit', (e) => {
 logoutButton.addEventListener('click', () => {
   sessionStorage.clear();
   localStorage.clear();
-  window.location.href = './login.html';
+  window.location.href = './login';
 });
 
 // Toggle edit mode
