@@ -1,4 +1,3 @@
-/* Global styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,8 +5,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   background-color: #f4f4f9;
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 /* Notes page main container */
@@ -15,12 +14,13 @@ body {
   background: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  height: 100vh;
   width: 90%;
   max-width: 1024px;
   padding: 20px;
 }
 
-/* Notes page title drop and bounce effect */
+/* Notes page title drop and bounce effect. So cute! */
 @keyframes dropFromSky {
   0% {
     transform: translateY(-200vh); /* Start far above the screen */
@@ -158,7 +158,7 @@ input[type='date'] {
   background-color: #60b0e6;
 }
 
-/* Additional margin for the logout button to maintain spacing */
+/* Additional margin to maintain spacing */
 #logout-button {
   margin-top: 10px;
 }
@@ -178,7 +178,7 @@ input[type='date'] {
   justify-content: center;
   align-items: center;
   border: none;
-  border-radius: 50%; /* Makes the buttons round */
+  border-radius: 50%;
   font-size: .75rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -187,34 +187,34 @@ input[type='date'] {
 
 /* Edit button */
 .note-actions button:nth-child(1) {
-  background-color: #ffd966; /* Light yellow */
+  background-color: #ffd966;
 }
 
 .note-actions button:nth-child(1):hover {
-  background-color: #f4c542;
+  background-color: #f4c542; /* Darker yellow */
 }
 
 /* Done button */
 .note-actions button:nth-child(2) {
-  background-color: #80d572; /* Light green */
+  background-color: #80d572;
 }
 
 .note-actions button:nth-child(2):hover {
-  background-color: #69b659;
+  background-color: #69b659; /* Darker green */
 }
 
 /* Delete button */
 .note-actions button:nth-child(3) {
-  background-color: #f57c7c; /* Light red */
+  background-color: #f57c7c;
 }
 
 .note-actions button:nth-child(3):hover {
-  background-color: #e05656;
+  background-color: #e05656; /* Darker red */
 }
 
 /* Button hover effect */
 .note-actions button:hover {
-  transform: scale(1.1); /* Slightly enlarges the button on hover */
+  transform: scale(1.1); /* Slightly enlarges on hover */
 }
 
 /* Sliding down animation for deleted note */
@@ -239,4 +239,3 @@ input[type='date'] {
       font-size: 1.5rem; /* Smaller font size for small screens */
   }
 }
-
