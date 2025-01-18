@@ -1,36 +1,6 @@
-// controllers/notesController.js
 const Note = require('../models/noteModel');  // Import the Note model
 
-// GET all notes for the authenticated user
-const getAllNotes = async (req, res) => {
-    console.log('Route /notes was hit');
-    console.log('Route /notes was hit by user:', req.user);
-
-    if (!req.isAuthenticated()) {
-        return res.redirect('/login');
-    }
-
-    try {
-        // Fetch notes from the database
-        const notes = await Note.find({ user: req.user._id }); // Assuming notes are tied to a user
-
-        if (notes.length === 0) {
-            return res.render('index', { notes: [], message: 'No notes available' });
-        }
-        
-        // Render the index.ejs file and pass the notes to it
-        res.render('index', { notes });
-    } catch (error) {
-        console.error('Error fetching notes:', error);
-        
-        // Respond with an error message
-        res.status(500).json({ message: 'Failed to fetch notes', error });
-    }
-};
-
-
-
-// POST a new note for the authenticated user
+// POST (Create) a new note for the authenticated user
 const createNote = async (req, res) => {
     const { title, content, date } = req.body;
     try {
@@ -48,7 +18,34 @@ const createNote = async (req, res) => {
     }
 };
 
-// PUT (update) an existing note
+// GET (Read) all notes for the authenticated user
+const getAllNotes = async (req, res) => {
+    console.log('Route /notes was hit');
+    console.log('Route /notes was hit by user:', req.user);
+
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login');
+    }
+
+    try {
+        // Fetch notes from the database
+        const notes = await Note.find({ user: req.user._id });
+
+        if (notes.length === 0) {
+            return res.render('index', { notes: [], message: 'No notes available' });
+        }
+        
+        // Render the index.ejs file and pass the notes to it
+        res.render('index', { notes });
+    } catch (error) {
+        console.error('Error fetching notes:', error);
+        
+        // Respond with an error message
+        res.status(500).json({ message: 'Failed to fetch notes', error });
+    }
+};
+
+// PUT (Update) an existing note
 const updateNote = async (req, res) => {
   const { noteId } = req.params;
   const { title, content, date } = req.body;
