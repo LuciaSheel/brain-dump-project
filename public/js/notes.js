@@ -1,7 +1,9 @@
 // Wait for DOM to fully load before executing any JavaScript,
 // to ensure all HTML elements are available for manipulation.
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM fully loaded and parsed');
   const form = document.getElementById('note-form');
+  console.log(form);  // Check if the element is null or properly found
   const notesList = document.getElementById('notes-list');
   const noteTitleInput = document.getElementById('note-title');
   const noteInput = document.getElementById('note-input');
@@ -108,40 +110,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (editButton.textContent === 'Edit') {
-      const noteTextContent = noteTextElement.textContent;
-      const noteTitleContent = noteTitleElement.textContent;
-      const noteDateContent = noteDateElement.textContent;
+      const noteTextContent = noteTextElement ? noteTextElement.textContent : '';
+      const noteTitleContent = noteTitleElement ? noteTitleElement.textContent : '';
+      const noteDateContent = noteDateElement ? noteDateElement.textContent : '';
 
       // Replace title with input
       const titleInput = replaceWithInput(noteTitleElement, noteTitleContent);
-      noteTitleElement = titleInput;
+      noteTitleElement = titleInput; // Update reference to the new input
 
       // Replace text with textarea
       const textarea = replaceWithInput(noteTextElement, noteTextContent, 'textarea');
-      noteTextElement = textarea;
+      noteTextElement = textarea; // Update reference to the new textarea
 
       // Replace date with input
       const dateInput = replaceWithInput(noteDateElement, noteDateContent, 'date');
-      noteDateElement = dateInput;
+      noteDateElement = dateInput; // Update reference to the new input
 
       editButton.textContent = 'Save';
     } else {
+      // Check if the input elements exist before updating
       const titleInput = noteElement.querySelector('.edit-input');
+    if (titleInput) {
       noteTitleElement.textContent = titleInput.value;
       noteElement.replaceChild(noteTitleElement, titleInput);
+    }
 
-      const textarea = noteElement.querySelector('.edit-textarea');
+    const textarea = noteElement.querySelector('.edit-textarea');
+    if (textarea) {
       const newNoteTextElement = document.createElement('span');
       newNoteTextElement.classList.add('note-text');
       newNoteTextElement.textContent = textarea.value;
       noteElement.replaceChild(newNoteTextElement, textarea);
       noteTextElement = newNoteTextElement;
+    }
 
-      const dateInput = noteElement.querySelector('.edit-input[type="date"]');
+    const dateInput = noteElement.querySelector('.edit-input[type="date"]');
+    if (dateInput) {
       noteDateElement.textContent = `Date: ${new Date(dateInput.value).toLocaleDateString()}`;
       noteElement.replaceChild(noteDateElement, dateInput);
+    }
 
-      editButton.textContent = 'Edit';
+    editButton.textContent = 'Edit';
 
       // Send updated note to the server
       const updatedTitle = noteTitleElement.textContent;
