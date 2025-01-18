@@ -1,5 +1,3 @@
-// login.js
-
 // DOM elements for forms and error containers
 const registerForm = document.getElementById('register-form');
 const loginForm = document.getElementById('login-form');
