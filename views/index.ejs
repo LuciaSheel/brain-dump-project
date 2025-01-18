@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <title>Notes</title>
+
+  <!-- Link to stylesheet for notes page -->
+  <link rel='stylesheet' href='/css/notes.css'>
+
+  <!-- Droid Sans font for input and textareas -->
+  <link href='https://fonts.googleapis.com/css2?family=Droid+Sans&display=swap' rel='stylesheet'>
+</head>
+<body>
+  <!-- Main container for the notes page -->
+  <div class='main-container'>
+
+    <!-- Notes page title -->
+    <h1 class='notes-page-title'>Offload Brain Here</h1>
+
+    <!-- Form for creating a note -->
+    <form id='note-form' class='note-form' method='POST' action='/notes'>
+  
+      <!-- Note title input -->
+      <input id='note-title' class='note-title-input' type='text' placeholder='Enter note title...' required />
+
+      <!-- Note date input -->
+      <input id='note-date' class='note-date-input' type='date' required />
+
+      <!-- Textarea for note content -->
+      <textarea id='note-input' class='note-input-field' placeholder='Write your note...' required></textarea>
+
+      <!-- Submit form button -->
+      <button class='btn' type='submit'>Add Note</button>
+    </form>
+
+    <!-- Logout button -->
+    <button id='logout-button' class='btn' type='button'>Logout</button>
+
+    <div id="notes-list" class="notes-list">
+      <% if (notes.length === 0) { %>
+        <p class="no-notes-message">No notes available. Start by adding a new note!</p>
+      <% } else { %>
+        <% notes.forEach(note => { %>
+          <div class="note" data-id="<%= note._id %>">
+            <h3 class="note-title"><%= note.title %></h3>
+            <p class="note-date">Date: <%= new Date(note.date).toLocaleDateString() %></p>
+            <span class="note-text"><%= note.content %></span>
+            <div class="note-actions">
+              <button class="edit-btn">Edit</button>
+              <button class="done-btn">Done</button>
+              <button class="delete-btn">Delete</button>
+            </div>
+          </div>
+        <% }); %>
+      <% } %>
+    </div>
+    
+  </div>
+
+  <!-- Link to notes.js file for handling notes functionality -->
+  <script src='/js/notes.js'></script>
+</body>
+</html>
