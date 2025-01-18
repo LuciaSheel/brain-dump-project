@@ -6,12 +6,20 @@ const getAllNotes = async (req, res) => {
     console.log('Route /notes was hit');
     console.log('Route /notes was hit by user:', req.user);
 
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login');
+    }
+
     try {
         // Fetch notes from the database
         const notes = await Note.find({ user: req.user._id }); // Assuming notes are tied to a user
+
+        if (notes.length === 0) {
+            return res.render('index', { notes: [], message: 'No notes available' });
+        }
         
-        // Respond with the notes
-        res.status(200).json(notes);
+        // Render the index.ejs file and pass the notes to it
+        res.render('index', { notes });
     } catch (error) {
         console.error('Error fetching notes:', error);
         
