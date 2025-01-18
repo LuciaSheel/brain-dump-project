@@ -10,8 +10,8 @@ const path = require('path');
 
 const Note = require('./models/noteModel'); // Adjust path as needed
 
-// Set EJS as the view engine
-// app.set('view engine', 'ejs');
+//Set EJS as the view engine
+app.set('view engine', 'ejs');
 // app.set('views', path.join(__dirname, 'views'));
 
 
@@ -51,19 +51,19 @@ app.use(express.urlencoded({ extended: true }));  // For URL-encoded data (form 
 // Connect to the database
 connectDB();  // Call the function to connect to MongoDB
 
-app.get('/notes', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'views', 'index.html'));
-  });
+// app.get('/notes', isAuthenticated, (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'views', 'index.html'));
+//   });
 
-app.get('/notes', isAuthenticated, async (req, res) => {
-    try {
-      // Fetch all notes
-      const notes = await Note.find({});
-      res.json(notes); // Send all notes as JSON
-    } catch (err) {
-      res.status(500).json({ error: 'Failed to fetch notes' });
-    }
-  });
+// app.get('/notes', isAuthenticated, async (req, res) => {
+//     try {
+//       // Fetch all notes
+//       const notes = await Note.find({});
+//       res.json(notes); // Send all notes as JSON
+//     } catch (err) {
+//       res.status(500).json({ error: 'Failed to fetch notes' });
+//     }
+//   });
 
 // app.get('/notes', isAuthenticated, async (req, res) => {
 //     try {
@@ -87,8 +87,9 @@ app.get('/notes', isAuthenticated, async (req, res) => {
   
 
 // Use routes
+app.use('/', notesRouter);
 app.use('/auth', authRouter);  // Authentication routes (login, registration)
-app.use('/notes', notesRouter);  // Notes routes (CRUD operations)
+app.use('/notes', isAuthenticated, notesRouter);  // Notes routes (CRUD operations)
 
 // Authentication-related routes (simplified)
 app.get('/login', (req, res) => {
