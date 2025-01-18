@@ -1,5 +1,4 @@
 const User = require('../models/userModel');
-const bcrypt = require('bcryptjs');
 
 // Register a new user
 const registerUser = async (req, res) => {
@@ -12,7 +11,6 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'Username already in use' });
     }
 
-    // Create user (bcrypt will hash password in the model)
     const user = new User({ username, password });
     await user.save();
     res.status(201).json({ message: 'User registered successfully' });
@@ -28,7 +26,7 @@ const loginUser = (req, res, next, passport) => {
       return res.status(500).json({ message: 'Error during login', error: err });
     }
     if (!user) {
-      return res.status(400).json({ message: info.message }); // info.message contains specific error details
+      return res.status(400).json({ message: info.message });
     }
 
     req.logIn(user, (err) => {
