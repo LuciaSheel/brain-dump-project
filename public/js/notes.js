@@ -1,3 +1,5 @@
+// Wait for DOM to fully load before executing any JavaScript,
+// to ensure all HTML elements are available for manipulation.
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('note-form');
   const notesList = document.getElementById('notes-list');
@@ -16,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!noteTitle || !noteText || !noteDate) return;
 
-    // Send the new note to the server via POST request
+    // Send the new note to the server
     fetch('/notes', {
       method: 'POST',
       headers: {
