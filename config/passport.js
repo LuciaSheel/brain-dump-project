@@ -38,7 +38,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-      const user = await User.findById(id); // Replace with your User model query
+      const user = await User.findById(id);
       done(null, user); // Attach the user to req.user
     } catch (err) {
       done(err);
