@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const noteDateInput = document.getElementById('note-date');
   const logoutButton = document.getElementById('logout-button');
 
+  // Check if elements exist before proceeding
+  if (form && notesList && noteTitleInput && noteInput && noteDateInput && logoutButton) {
+
   // Add note event
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -63,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (target.classList.contains('done-btn')) {
       toggleDone(noteElement);
     } else if (target.classList.contains('delete-btn')) {
-      deleteNote(noteElement);
+      deleteNote(noteId, noteElement);
     }
   });
 
@@ -93,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper function to replace an element with an input element
     function replaceWithInput(oldElement, inputValue, inputType = 'text') {
       const input = document.createElement(inputType === 'date' ? 'input' : 'textarea');
-      input.classList.add('edit-input');
+      input.classList.add(inputType === 'date' ? 'edit-input' : 'edit-textarea');
       if (inputType === 'date') {
         input.type = 'date';
         input.value = new Date(inputValue.split('Date: ')[1]).toISOString().split('T')[0];
@@ -143,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Send updated note to the server
       const updatedTitle = noteTitleElement.textContent;
       const updatedContent = noteTextElement.textContent;
-      const updatedDate = dateInput.value;
+      const updatedDate = dateInput ? dateInput.value : '';
 
       fetch(`/notes/${noteElement.dataset.id}`, {
         method: 'PUT',
@@ -169,9 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Delete note
-  function deleteNote(noteElement) {
-    const noteId = noteElement.dataset.id;
-
+  function deleteNote(noteId, noteElement) {
     fetch(`/notes/${noteId}`, {
       method: 'DELETE',
     })
@@ -189,4 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.clear();
     window.location.href = './login';
   });
+
+} else {
+  console.error('One or more elements are missing in the DOM.');
+}
 });
