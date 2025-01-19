@@ -74,8 +74,7 @@ body {
 
 /* Focus */
 .note-form input:focus,
-.note-form textarea:focus, 
-.note-date-input:focus {
+.note-form textarea:focus {
   border-color: #f4c542;
   outline: none;
 }
@@ -113,19 +112,6 @@ body {
   -webkit-background-clip: text;  /* For Safari */
   margin-right: 10px; /* Space between title and text */
   display: inline-block; /* Ensure gradient applies properly */
-}
-
-/* Date */
-input[type='date'] {
-  font-family: 'Droid Sans', sans-serif;
-  font-size: 1rem;
-  color: #727070;
-}
-
-.note-date {
-  font-size: 0.8rem;
-  color: #727070;
-  margin: 5px 0; /* Add spacing between title and note text */
 }
 
 /* Note text */
