@@ -7,11 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const notesList = document.getElementById('notes-list');
   const noteTitleInput = document.getElementById('note-title');
   const noteInput = document.getElementById('note-input');
-  const noteDateInput = document.getElementById('note-date');
   const logoutButton = document.getElementById('logout-button');
 
   // Check if elements exist before proceeding
-  if (form && notesList && noteTitleInput && noteInput && noteDateInput && logoutButton) {
+  if (form && notesList && noteTitleInput && noteInput && logoutButton) {
+
+    // Function to replace an element with an input or textarea element
+    function replaceWithInput(element, value, type = 'input') {
+      const inputElement = document.createElement(type);
+      inputElement.classList.add(type === 'input' ? 'edit-input' : 'edit-textarea');
+      inputElement.value = value;
+
+      element.replaceWith(inputElement); // Replace the original element with the input
+      return inputElement; // Return the new input/textarea element
+    }
 
     // Add note event
     form.addEventListener('submit', (e) => {
@@ -19,9 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const noteTitle = noteTitleInput.value.trim();
       const noteText = noteInput.value.trim();
-      const noteDate = noteDateInput.value;
 
-      if (!noteTitle || !noteText || !noteDate) return;
+      if (!noteTitle || !noteText ) return;
 
       // Send the new note to the server
       fetch('/notes', {
@@ -31,14 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         body: JSON.stringify({
           title: noteTitle,
-          content: noteText,
-          date: noteDate,
+          content: noteText
         }),
       })
         .then(response => response.json())
         .then(data => {
           // Create and append the note element
-          const noteElement = createNoteElement(data._id, noteTitle, noteText, noteDate);
+          const noteElement = createNoteElement(data._id, noteTitle, noteText);
           notesList.appendChild(noteElement);
         })
         .catch(error => {
@@ -48,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Clear the input fields after submission
       noteTitleInput.value = '';
       noteInput.value = '';
-      noteDateInput.value = '';
     });
 
     // Delegate events to the container
@@ -60,10 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const noteId = noteElement.dataset.id;
       const noteTitleElement = noteElement.querySelector('.note-title');
-      const noteDateElement = noteElement.querySelector('.note-date');
 
       if (target.classList.contains('edit-btn')) {
-        toggleEditMode(noteElement, noteTitleElement, noteDateElement, target);
+        toggleEditMode(noteElement, noteTitleElement, target);
       } else if (target.classList.contains('done-btn')) {
         toggleDone(noteElement);
       } else if (target.classList.contains('delete-btn')) {
@@ -72,14 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Function to create a note element
-    function createNoteElement(noteId, noteTitle, noteText, noteDate) {
+    function createNoteElement(noteId, noteTitle, noteText) {
       const note = document.createElement('div');
       note.classList.add('note');
       note.dataset.id = noteId;
 
       note.innerHTML = `
         <h3 class="note-title">${noteTitle}</h3>
-        <p class="note-date">Date: ${new Date(noteDate).toLocaleDateString()}</p>
         <span class="note-text">${noteText}</span>
         <div class="note-actions">
           <button class="edit-btn">Edit</button>
@@ -91,43 +95,27 @@ document.addEventListener('DOMContentLoaded', () => {
       return note;
     }
 
-    function toggleEditMode(noteElement, noteTitleElement, noteDateElement, editButton) {
-      let noteTextElement = noteElement.querySelector('.note-text');
+    function toggleEditMode(noteElement, noteTitleElement, editButton) {
+      console.log('Entering toggleEditMode');
 
-      // Helper function to replace an element with an input element
-      function replaceWithInput(oldElement, inputValue, inputType = 'text') {
-        const input = document.createElement(inputType === 'date' ? 'input' : 'textarea');
-        input.classList.add(inputType === 'date' ? 'edit-input' : 'edit-textarea');
-        if (inputType === 'date') {
-          input.type = 'date';
-          input.value = new Date(inputValue.split('Date: ')[1]).toISOString().split('T')[0];
-        } else {
-          input.value = inputValue;
-        }
-        oldElement.replaceWith(input);
-        return input;
-      }
+      let noteTextElement = noteElement.querySelector('.note-text');
+      console.log('noteTextElement:', noteTextElement);
 
       if (editButton.textContent === 'Edit') {
         const noteTextContent = noteTextElement ? noteTextElement.textContent : '';
         const noteTitleContent = noteTitleElement ? noteTitleElement.textContent : '';
-        const noteDateContent = noteDateElement ? noteDateElement.textContent : '';
-
+        
         // Replace title with input
         noteTitleElement = replaceWithInput(noteTitleElement, noteTitleContent);
 
         // Replace text with textarea
         noteTextElement = replaceWithInput(noteTextElement, noteTextContent, 'textarea');
 
-        // Replace date with input
-        noteDateElement = replaceWithInput(noteDateElement, noteDateContent, 'date');
-
         editButton.textContent = 'Save';
       } else {
         // Save mode
         const titleInput = noteElement.querySelector('.edit-input');
         const textInput = noteElement.querySelector('.edit-textarea');
-        const dateInput = noteElement.querySelector('input[type="date"]');
 
         if (titleInput) {
           const newTitleElement = document.createElement('h3');
@@ -145,21 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
           noteTextElement = newTextElement; // Update reference
         }
 
-        if (dateInput) {
-          const newDateElement = document.createElement('p');
-          newDateElement.classList.add('note-date');
-          newDateElement.textContent = `Date: ${new Date(dateInput.value).toLocaleDateString()}`;
-          dateInput.replaceWith(newDateElement); // Replace date input with the new date
-          noteDateElement = newDateElement; // Update reference
-        }
-
         editButton.textContent = 'Edit';
       }
 
       // Send updated note to the server
       const updatedTitle = noteTitleElement.textContent;
       const updatedContent = noteTextElement.textContent;
-      const updatedDate = dateInput ? dateInput.value : '';
 
       fetch(`/notes/${noteElement.dataset.id}`, {
         method: 'PUT',
@@ -168,8 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         body: JSON.stringify({
           title: updatedTitle,
-          content: updatedContent,
-          date: updatedDate,
+          content: updatedContent
         }),
       })
         .catch(error => {

@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   mockNoteElement.classList.add('note');
   mockNoteElement.innerHTML = `
     <h3 class="note-title">Test Note</h3>
-    <p class="note-date">Date: 2025-01-01</p>
     <span class="note-text">This is a test note.</span>
     <div class="note-actions">
       <button class="edit-btn">Edit</button>
@@ -35,16 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
   titleInput.value = 'Updated Note Title';
   const textarea = mockNoteElement.querySelector('.edit-textarea');
   textarea.value = 'Updated note text';
-  const dateInput = mockNoteElement.querySelector('.edit-input[type="date"]');
-  dateInput.value = '2025-01-02';
   editButton.dispatchEvent(new MouseEvent('click'));
 
-  // Assert that the title, date, and text are updated
+  // Assert that the title and text are updated
   const updatedTitle = mockNoteElement.querySelector('.note-title');
-  const updatedDate = mockNoteElement.querySelector('.note-date');
   const updatedText = mockNoteElement.querySelector('.note-text');
   console.assert(updatedTitle.textContent === 'Updated Note Title', 'Title should be updated');
-  console.assert(updatedDate.textContent === 'Date: 2025-01-02', 'Date should be updated');
   console.assert(updatedText.textContent === 'Updated note text', 'Text should be updated');
 
   // Simulate "Done" button click
