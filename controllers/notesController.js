@@ -2,12 +2,11 @@ const Note = require('../models/noteModel');  // Import the Note model
 
 // POST (Create) a new note for the authenticated user
 const createNote = async (req, res) => {
-    const { title, content, date } = req.body;
+    const { title, content } = req.body;
     try {
         const newNote = new Note({
             title,
             content,
-            date,
             user: req.user._id
         });
         await newNote.save();
@@ -48,11 +47,11 @@ const getAllNotes = async (req, res) => {
 // PUT (Update) an existing note
 const updateNote = async (req, res) => {
   const { noteId } = req.params;
-  const { title, content, date } = req.body;
+  const { title, content } = req.body;
   try {
       const updatedNote = await Note.findByIdAndUpdate(
           noteId,
-          { title, content, date },
+          { title, content },
           { new: true }
       );
       if (!updatedNote) {
