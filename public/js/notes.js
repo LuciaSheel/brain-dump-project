@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
           // Create and append the note element
           const noteElement = createNoteElement(data._id, noteTitle, noteText);
           notesList.appendChild(noteElement);
+
+          // Check if the "No notes available." message exists and remove it
+          const noNotesMessage = document.querySelector('.no-notes-message');
+          if (noNotesMessage) {
+            noNotesMessage.remove();
+          }
         })
         .catch(error => {
           console.error('Error saving note:', error);
