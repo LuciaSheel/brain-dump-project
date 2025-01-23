@@ -112,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         noteTextElement = replaceWithInput(noteTextElement, noteTextContent, 'textarea');
 
         editButton.textContent = 'Save';
+
       } else {
-        // Save mode
         const titleInput = noteElement.querySelector('.edit-input');
         const textInput = noteElement.querySelector('.edit-textarea');
 
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
           textInput.replaceWith(newTextElement); // Replace textarea with the new text
           noteTextElement = newTextElement; // Update reference
         }
-
+        
         editButton.textContent = 'Edit';
       }
 
