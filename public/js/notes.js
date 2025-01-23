@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
       note.classList.add('note');
       note.dataset.id = noteId;
 
+      // Dynamically sets the inner HTML of the note element
       note.innerHTML = `
         <h3 class="note-title">${noteTitle}</h3>
         <span class="note-text">${noteText}</span>
@@ -111,9 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Replace text with textarea
         noteTextElement = replaceWithInput(noteTextElement, noteTextContent, 'textarea');
 
-        editButton.textContent = 'Save';
+        editButton.textContent = 'Save'; // Change button text to 'Save'
 
       } else {
+        // Exit edit mode and save changes
         const titleInput = noteElement.querySelector('.edit-input');
         const textInput = noteElement.querySelector('.edit-textarea');
 
@@ -133,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
           noteTextElement = newTextElement; // Update reference
         }
         
-        editButton.textContent = 'Edit';
+        editButton.textContent = 'Edit'; // Change button back to 'Edit'
       }
 
       // Send updated note to the server
