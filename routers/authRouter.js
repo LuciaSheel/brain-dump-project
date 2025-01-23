@@ -12,10 +12,6 @@ router.post('/login', (req, res, next) => {
   loginUser(req, res, next, passport);
 });
 
-
-// Logout route
-// router.get('/logout', logoutUser);
-
 router.get('/logout', (req, res) => {
   req.logout((err) => {
       if (err) {
@@ -25,6 +21,5 @@ router.get('/logout', (req, res) => {
       res.redirect('/login'); // Redirect to the login route
   });
 });
-
 
 module.exports = router;
