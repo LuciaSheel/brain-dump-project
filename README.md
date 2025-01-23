@@ -37,4 +37,4 @@ A simple web application for creating, editing, and deleting notes.
 4. Logout
 
 ## Database
-The project uses MongoDB, and the database is named `notesApp`.
+The project uses MongoDB, and the database is named `brainDump`.
