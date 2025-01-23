@@ -1,7 +1,4 @@
 module.exports.isAuthenticated = (req, res, next) => {
-  console.log('Checking if authenticated...');
-
-  console.log('Session data:', req.session);
 
   // Check if user is authenticated via Passport
   if (req.isAuthenticated()) {
