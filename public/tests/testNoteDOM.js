@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM fully loaded and parsed');
 
   // Create and append the mock note element to the DOM
   const mockNoteElement = document.createElement('div');
