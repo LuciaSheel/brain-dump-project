@@ -58,6 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Test Cases End Here ---
 
-  // Optional: Clean up the DOM
+  // Clean up the DOM
   document.body.innerHTML = '';
 });
