@@ -89,6 +89,12 @@ body {
   overflow-x: hidden;
 }
 
+.no-notes-message {
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 1rem;
+  color: #727070;
+}
+
 /* Note container */
 .note {
   display: flex;
