@@ -1,7 +1,6 @@
 // Wait for DOM to fully load before executing any JavaScript,
 // to ensure all HTML elements are available for manipulation.
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM fully loaded and parsed');
   
   const form = document.getElementById('note-form');
   const notesList = document.getElementById('notes-list');
@@ -103,10 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleEditMode(noteElement, noteTitleElement, editButton) {
-      console.log('Entering toggleEditMode');
 
       let noteTextElement = noteElement.querySelector('.note-text');
-      console.log('noteTextElement:', noteTextElement);
 
       if (editButton.textContent === 'Edit') {
         const noteTextContent = noteTextElement ? noteTextElement.textContent : '';
