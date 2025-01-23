@@ -19,8 +19,6 @@ const createNote = async (req, res) => {
 
 // GET (Read) all notes for the authenticated user
 const getAllNotes = async (req, res) => {
-    console.log('Route /notes was hit');
-    console.log('Route /notes was hit by user:', req.user);
 
     if (!req.isAuthenticated()) {
         return res.redirect('/login');
