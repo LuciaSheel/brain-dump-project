@@ -9,6 +9,9 @@ const path = require('path');
 
 const Note = require('./models/noteModel');
 
+// Handle favicon.ico request to avoid 404 errors
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 //Set EJS as the view engine
 app.set('view engine', 'ejs');
 
@@ -30,12 +33,6 @@ app.use(passport.session()); // This will enable `req.user`
 // Import routes
 const authRouter = require('./routers/authRouter');
 const notesRouter = require('./routers/notesRouter');
-
-// Middleware to log every incoming request
-app.use((req, res, next) => {
-    console.log(`Incoming request: ${req.method} ${req.url}`);
-    next();
-});
 
 // Middleware setup
 app.use(express.static(path.join(__dirname, 'public')));
