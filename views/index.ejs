@@ -6,14 +6,13 @@
 
   <title>Notes</title>
 
-  <!-- Link to stylesheet for notes page -->
   <link rel='stylesheet' href='/css/notes.css'>
 
   <!-- Droid Sans font for input and textareas -->
   <link href='https://fonts.googleapis.com/css2?family=Droid+Sans&display=swap' rel='stylesheet'>
 </head>
 <body>
-  <!-- Main container for the notes page -->
+
   <div class='main-container'>
 
     <!-- Notes page title -->
@@ -35,10 +34,14 @@
     <!-- Logout button -->
     <button id='logout-button' class='btn' type='button'>Logout</button>
 
+    <!-- EJS -->
     <div id="notes-list" class="notes-list">
+
+      <!-- Check if there are no notes -->
       <% if (notes.length === 0) { %>
         <p class="no-notes-message">No notes available. Start by adding a new note!</p>
       <% } else { %>
+        <!-- Loop through each note and dynamically render it -->
         <% notes.forEach(note => { %>
           <div class="note" data-id="<%= note._id %>">
             <h3 class="note-title"><%= note.title %></h3>
@@ -57,6 +60,6 @@
 
   <!-- Link to notes.js file for handling notes functionality -->
   <script src='/js/notes.js'></script>
-  <!-- <script src="/tests/testNoteDOM.js"></script> -->
+
 </body>
 </html>
