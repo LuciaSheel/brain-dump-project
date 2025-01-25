@@ -19,7 +19,7 @@ A simple web application for creating, editing, and deleting notes.
 
 3. Install dependencies.
     ```
-    npm install
+    npm i bcryptjs dotenv ejs express express-session mongoose passport passport-local
 
 4. Run the application.
     ```
@@ -37,4 +37,4 @@ A simple web application for creating, editing, and deleting notes.
 4. Logout
 
 ## Database
-The project uses MongoDB, and the database is named `brainDump`.
+The project uses MongoDB and the database is named `brainDump`.
