@@ -19,7 +19,7 @@ A simple web application for creating, editing, and deleting notes.
 
 3. Install dependencies.
     ```
-    npm i bcryptjs dotenv ejs express express-session mongoose passport passport-local
+    npm install
 
 4. Run the application.
     ```
