@@ -7,21 +7,34 @@ A simple web application for creating, editing, and deleting notes.
 ## Prerequisites
 - Node.js (v14 or later)
 - npm (v6 or later)
+- MongoDB (for local development, or provide a cloud database like MongoDB Atlas)
 
 ## Installation
-1. Clone the repository.
+1. Clone the repository:
    ```
    git clone https://github.com/LuciaSheel/brainDump.git
 
-2. Navigate to the directory.
+2. Navigate to the directory:
     ```
     cd brainDump
 
-3. Install dependencies.
+3. Copy `.env.example` to `.env`:
+    ```
+    cp .env.example .env
+
+4. Open `.env` and fill in your own values for:
+
+- `MONGO_URI`
+
+- `PORT`
+
+- `SESSION_SECRET`
+
+5. Install dependencies:
     ```
     npm install
 
-4. Run the application.
+4. Run the application:
     ```
     npm start
 
