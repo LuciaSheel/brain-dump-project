@@ -1,6 +1,6 @@
 # Brain Dump Notes App
 
-A simple web application for creating, editing, and deleting notes.
+A simple Node.js and Express web application for creating, editing, and deleting notes, using MongoDB for data storage.
 
 ***
 
